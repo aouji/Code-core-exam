@@ -1,0 +1,11 @@
+=form_for @ticket do |f|
+  =f.label :title
+  =f.text_field :title
+  %br
+  =f.label :body
+  =f.text_area :body
+  %br
+  =f.label :resolved,"Resolved?"
+  =f.check_box :resolved
+  %br
+  =f.submit "submit ticket"

@@ -1,0 +1,14 @@
+var ticketID= "#ticket"+<%= @ticket.id %>
+<% if @ticket.resolved? %>
+  $(ticketID+" input[type='hidden']").val("false")
+  buttonText = "Mark " + <%= @ticket.id %> + " un-Resolved"
+  $wrapper = $("<li></li>")
+  resolveMessage="Resolved by "+ "<%= @ticket.resolver.email%>"
+  $wrapper.text(resolveMessage)
+  $(ticketID).prepend($wrapper)
+<% else %>
+  $(ticketID+" input[type='hidden']").val("true")
+  buttonText = "Mark " + <%= @ticket.id %> + " Resolved"
+  $(ticketID+" li:first").remove()
+<% end %>
+$(ticketID+ " input[type='submit']").val(buttonText)

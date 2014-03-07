@@ -1,0 +1,25 @@
+-if user_signed_in? 
+  %li=  button_to("Sign out",destroy_user_session_path, method: :delete)
+-else 
+  %li= link_to "Sign in",new_user_session_path
+  %li= link_to "Sign up",new_user_registration_path
+%ul
+  - @tickets.each do |ticket|
+    %li
+      =ticket.title 
+      by
+      =ticket.user.email
+    %li
+      =ticket.body
+    %li
+      =form_for ticket,method: :patch, remote: true,method: :patch do |f|
+        %span{id: "ticket#{ticket.id}"}
+          - if ticket.resolved?
+            %li
+              Resolved by
+              =ticket.resolver.email
+            =f.hidden_field :resolved, value: false
+            =f.submit "Mark #{ticket.id} un-Resolved"
+          - else
+            =f.hidden_field :resolved, value: true
+            =f.submit "Mark #{ticket.id} Resolved"
